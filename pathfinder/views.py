@@ -4,7 +4,6 @@ import heapq  # Для очереди с приоритетами
 from .forms import RouteForm
 
 
-
 def find_shortest_path(start_name, end_name):
     # Построим граф в виде словаря
     graph = {}
@@ -42,32 +41,37 @@ def find_shortest_path(start_name, end_name):
 def floor_map(request, floor=1):
     nodes = Node.objects.filter(floor=floor)
     edges = Edge.objects.filter(from_node__floor=floor, to_node__floor=floor)
+    form = RouteForm()
 
-    # Найти маршрут от 'tk' до 'room_151'
-    start_node = 'tk'
-    end_node = 'room_151'
-    path = find_shortest_path(start_node, end_node)
+    path_nodes = []
+    path_edges = []
+    terminal_nodes = []
 
-    # Преобразуем маршрут в список узлов
-    path_nodes = Node.objects.filter(name__in=path)
+    if request.method == 'POST':
+        form = RouteForm(request.POST)
+        if form.is_valid():
+            start_node = form.cleaned_data['start'].name
+            end_node = form.cleaned_data['end'].name
 
-    # Определяем конечные узлы только из маршрута
-    edge_count = {}
-    for edge in edges:
-        edge_count[edge.from_node.name] = edge_count.get(edge.from_node.name, 0) + 1
-        edge_count[edge.to_node.name] = edge_count.get(edge.to_node.name, 0) + 1
+            # Найти маршрут
+            path = find_shortest_path(start_node, end_node)
+            path_nodes = Node.objects.filter(name__in=path)
+            path_edges = edges.filter(from_node__name__in=path, to_node__name__in=path)
 
-    terminal_nodes_in_path = [
-        node for node in path_nodes if edge_count.get(node.name, 0) == 1
-    ]
+            # Добавляем только начальный и конечный узлы маршрута
+            terminal_nodes = [
+                Node.objects.get(name=start_node),
+                Node.objects.get(name=end_node)
+            ]
 
-    # Отправляем данные в шаблон
     return render(request, 'pathfinder/floor_map.html', {
-        'nodes': terminal_nodes_in_path,  # Только конечные узлы из маршрута
+        'form': form,  # Форма для выбора начальной и конечной точки
+        'nodes': terminal_nodes,  # Только начальный и конечный узлы
         'edges': edges,
-        'path_nodes': path_nodes,  # Узлы на маршруте
-        'path_edges': edges.filter(from_node__name__in=path, to_node__name__in=path),  # Рёбра маршрута
+        'path_nodes': path_nodes,
+        'path_edges': path_edges,
         'floor': floor,
     })
+
 
 

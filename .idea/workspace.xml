@@ -4,35 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="189e4f96-7e06-4dca-bee2-fcb4cf3d6157" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/DjangoCampusMap.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DjangoCampusMap/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DjangoCampusMap/asgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DjangoCampusMap/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DjangoCampusMap/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DjangoCampusMap/wsgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/data/edges.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/data/nodes.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/migrations/0001_initial.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/scripts.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/static/pathfinder/1floor.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/templates/pathfinder/floor_map.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/views.py" afterDir="false" />
+    <list default="true" id="189e4f96-7e06-4dca-bee2-fcb4cf3d6157" name="Changes" comment="initial (тут готово отображение маршрута по данным из views.py)">
+      <change afterPath="$PROJECT_DIR$/pathfinder/templates/pathfinder/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pathfinder/templatetags/form_filters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/DjangoCampusMap.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DjangoCampusMap.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pathfinder/templates/pathfinder/floor_map.html" beforeDir="false" afterPath="$PROJECT_DIR$/pathfinder/templates/pathfinder/floor_map.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pathfinder/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/pathfinder/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +31,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Allfeeto"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Allfeeto/django-campus-map",
+    "accountId": "83f72de4-ae22-4ea2-89b0-e6d7cb9248a1"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -140,11 +130,24 @@
       <updated>1732389731425</updated>
       <workItem from="1732389732875" duration="4462000" />
       <workItem from="1732394276889" duration="3122000" />
-      <workItem from="1732397414365" duration="270000" />
+      <workItem from="1732397414365" duration="1705000" />
     </task>
+    <task id="LOCAL-00001" summary="initial (тут готово отображение маршрута по данным из views.py)">
+      <option name="closed" value="true" />
+      <created>1732397883225</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1732397883225</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initial (тут готово отображение маршрута по данным из views.py)" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial (тут готово отображение маршрута по данным из views.py)" />
   </component>
 </project>

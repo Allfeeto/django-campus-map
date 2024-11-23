@@ -24,6 +24,7 @@
     <option name="TEMPLATE_FOLDERS">
       <list>
         <option value="$MODULE_DIR$/pathfinder/templates" />
+        <option value="$MODULE_DIR$/pathfinder/templatetags" />
       </list>
     </option>
   </component>

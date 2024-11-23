@@ -4,37 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Floor {{ floor }}</title>
+
+    <!-- Подключение Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .map-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px; /* Ограничиваем видимую область карты */
+            height: 600px;     /* Ограничиваем высоту карты */
+            overflow: auto;    /* Добавляем прокрутку */
+            border: 1px solid #ddd;
+            margin: 0 auto;    /* Центрируем карту на странице */
+        }
+
+        .map-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-light">
     {% load static %}
-    <h1>Floor {{ floor }}</h1>
-    
-    
-    <!-- Вставка SVG -->
-    <div style="position: relative; width: 3000px; height: 2000px;">
-        <img src="{% static 'pathfinder/1floor.svg' %}" 
-             alt="Floor {{ floor }}" 
-             style="position: absolute; top: 0; left: 0; width: 3000px; height: 2000px; z-index: 1;">
-    
-            <!-- SVG-карта -->
-            <svg width="3000" height="2000" style="position: absolute; top: 0; left: 0; z-index: 2;" xmlns="http://www.w3.org/2000/svg">
+    {% load form_filters %}
+
+    <div class="container">
+        <h1 class="text-center text-primary mb-4">Floor {{ floor }}</h1>
+
+        <!-- Форма для выбора начальной и конечной точки -->
+        <form method="post" class="row g-3">
+            {% csrf_token %}
+            <div class="col-md-5">
+                <label for="start" class="form-label">Начальная точка</label>
+                {{ form.start|add_class:"form-select" }}
+            </div>
+            <div class="col-md-5">
+                <label for="end" class="form-label">Конечная точка</label>
+                {{ form.end|add_class:"form-select" }}
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">Построить маршрут</button>
+            </div>
+        </form>
+
+        <!-- Карта с прокруткой -->
+        <div class="map-container mt-4">
+            <img src="{% static 'pathfinder/1floor.svg' %}" 
+                 alt="Floor {{ floor }}" 
+                 class="map-background" 
+                 width="3000" 
+                 height="2000">
+
+            <!-- Слой маршрута -->
+            <svg class="map-overlay" width="3000" height="2000" xmlns="http://www.w3.org/2000/svg">
                 <!-- Рёбра маршрута -->
                 {% for edge in path_edges %}
                 <line x1="{{ edge.from_node.x }}" y1="{{ edge.from_node.y }}"
                       x2="{{ edge.to_node.x }}" y2="{{ edge.to_node.y }}"
                       stroke="darkblue" stroke-width="4" />
                 {% endfor %}
-            
-                <!-- Отображаем только конечные узлы и узлы маршрута -->
+
+                <!-- Отображаем только начальный и конечный узлы -->
                 {% for node in nodes %}
                 <circle cx="{{ node.x }}" cy="{{ node.y }}" r="10" fill="darkblue" stroke="black" stroke-width="2">
                     <title>{{ node.name }}</title>
                 </circle>
                 {% endfor %}
             </svg>
-
-    
-    
+        </div>
     </div>
+
+    <!-- Подключение Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
