@@ -11,23 +11,27 @@
         .map-container {
             position: relative;
             width: 100%;
-            max-width: 1000px; /* Ограничиваем видимую область карты */
+            max-width: 900px; /* Ограничиваем видимую область карты */
             height: 600px;     /* Ограничиваем высоту карты */
-            overflow: auto;    /* Добавляем прокрутку */
+            overflow: hidden;  /* Отключаем стандартную прокрутку */
             border: 1px solid #ddd;
-            margin: 0 auto;    /* Центрируем карту на странице */
+            margin: 0 auto;    /* Центрируем карту */
+            user-select: none; /* Отключение выделения текста */
         }
 
-        .map-background {
+        .map-wrapper {
             position: absolute;
             top: 0;
             left: 0;
+            transform-origin: 0 0; /* Устанавливаем точку масштабирования */
+            transition: transform 0.1s ease-out; /* Плавное масштабирование */
         }
 
         .map-overlay {
             position: absolute;
             top: 0;
             left: 0;
+            z-index: 2; /* Отображаем слой маршрута поверх карты */
         }
     </style>
 </head>
@@ -54,34 +58,113 @@
             </div>
         </form>
 
-        <!-- Карта с прокруткой -->
-        <div class="map-container mt-4">
-            <img src="{% static 'pathfinder/1floor.svg' %}" 
-                 alt="Floor {{ floor }}" 
-                 class="map-background" 
-                 width="3000" 
-                 height="2000">
+        <!-- Карта с масштабированием -->
+        <div class="map-container mt-4" id="map-container">
+            <div class="map-wrapper" id="map-wrapper">
+                <img src="{% static 'pathfinder/1floor.svg' %}" 
+                     alt="Floor {{ floor }}" 
+                     width="3000" 
+                     height="2000">
 
-            <!-- Слой маршрута -->
-            <svg class="map-overlay" width="3000" height="2000" xmlns="http://www.w3.org/2000/svg">
-                <!-- Рёбра маршрута -->
-                {% for edge in path_edges %}
-                <line x1="{{ edge.from_node.x }}" y1="{{ edge.from_node.y }}"
-                      x2="{{ edge.to_node.x }}" y2="{{ edge.to_node.y }}"
-                      stroke="darkblue" stroke-width="4" />
-                {% endfor %}
+                <!-- Слой маршрута -->
+                <svg class="map-overlay" width="3000" height="2000" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Рёбра маршрута -->
+                    {% for edge in path_edges %}
+                    <line x1="{{ edge.from_node.x }}" y1="{{ edge.from_node.y }}"
+                          x2="{{ edge.to_node.x }}" y2="{{ edge.to_node.y }}"
+                          stroke="darkblue" stroke-width="4" />
+                    {% endfor %}
 
-                <!-- Отображаем только начальный и конечный узлы -->
-                {% for node in nodes %}
-                <circle cx="{{ node.x }}" cy="{{ node.y }}" r="10" fill="darkblue" stroke="black" stroke-width="2">
-                    <title>{{ node.name }}</title>
-                </circle>
-                {% endfor %}
-            </svg>
+                    <!-- Отображаем только начальный и конечный узлы -->
+                    {% for node in nodes %}
+                    <circle cx="{{ node.x }}" cy="{{ node.y }}" r="10" fill="darkblue" stroke="black" stroke-width="2">
+                        <title>{{ node.name }}</title>
+                    </circle>
+                    {% endfor %}
+                </svg>
+            </div>
         </div>
     </div>
 
     <!-- Подключение Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Добавление масштабирования и ограничения перемещения -->
+    <script>
+        const container = document.getElementById('map-container');
+        const wrapper = document.getElementById('map-wrapper');
+        let scale = 0.3; // Установить минимальный масштаб при загрузке
+        let translateX = 0, translateY = 0; // Текущая позиция
+        let isDragging = false;
+        let startX, startY;
+
+        // Получить размеры карты и контейнера
+        const mapWidth = 3000; // Ширина карты (в пикселях)
+        const mapHeight = 2000; // Высота карты (в пикселях)
+        const containerWidth = container.offsetWidth;
+        const containerHeight = container.offsetHeight;
+
+        // Применение начального масштаба
+        function initializeTransform() {
+            wrapper.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        }
+
+        // Масштабирование
+        container.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const scaleAmount = 0.1;
+            if (e.deltaY < 0) {
+                scale += scaleAmount; // Увеличение масштаба
+            } else {
+                scale = Math.max(0.3, scale - scaleAmount); // Минимальный масштаб
+            }
+            updateTransform();
+        });
+
+        // Ограничить координаты перемещения
+        function clampPosition() {
+            const scaledWidth = mapWidth * scale;
+            const scaledHeight = mapHeight * scale;
+
+            // Лимиты по горизонтали
+            const minX = Math.min(0, containerWidth - scaledWidth);
+            const maxX = 0;
+
+            // Лимиты по вертикали
+            const minY = Math.min(0, containerHeight - scaledHeight);
+            const maxY = 0;
+
+            translateX = Math.max(minX, Math.min(maxX, translateX));
+            translateY = Math.max(minY, Math.min(maxY, translateY));
+        }
+
+        // Начало перемещения карты
+        container.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+        });
+
+        // Перемещение карты
+        container.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            clampPosition(); // Применить ограничения
+            updateTransform();
+        });
+
+        // Завершение перемещения карты
+        container.addEventListener('mouseup', () => isDragging = false);
+        container.addEventListener('mouseleave', () => isDragging = false);
+
+        // Обновление трансформации
+        function updateTransform() {
+            wrapper.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        }
+
+        // Инициализация карты
+        initializeTransform();
+    </script>
 </body>
 </html>
