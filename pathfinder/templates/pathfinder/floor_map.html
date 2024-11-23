@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floor {{ floor }}</title>
+</head>
+<body>
+    {% load static %}
+    <h1>Floor {{ floor }}</h1>
+    
+    
+    <!-- Вставка SVG -->
+    <div style="position: relative; width: 3000px; height: 2000px;">
+        <img src="{% static 'pathfinder/1floor.svg' %}" 
+             alt="Floor {{ floor }}" 
+             style="position: absolute; top: 0; left: 0; width: 3000px; height: 2000px; z-index: 1;">
+    
+            <!-- SVG-карта -->
+            <svg width="3000" height="2000" style="position: absolute; top: 0; left: 0; z-index: 2;" xmlns="http://www.w3.org/2000/svg">
+                <!-- Рёбра маршрута -->
+                {% for edge in path_edges %}
+                <line x1="{{ edge.from_node.x }}" y1="{{ edge.from_node.y }}"
+                      x2="{{ edge.to_node.x }}" y2="{{ edge.to_node.y }}"
+                      stroke="darkblue" stroke-width="4" />
+                {% endfor %}
+            
+                <!-- Отображаем только конечные узлы и узлы маршрута -->
+                {% for node in nodes %}
+                <circle cx="{{ node.x }}" cy="{{ node.y }}" r="10" fill="darkblue" stroke="black" stroke-width="2">
+                    <title>{{ node.name }}</title>
+                </circle>
+                {% endfor %}
+            </svg>
+
+    
+    
+    </div>
+</body>
+</html>
