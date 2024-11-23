@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="189e4f96-7e06-4dca-bee2-fcb4cf3d6157" name="Changes" comment="добавил стили и вынес карту в отдельную область">
+    <list default="true" id="189e4f96-7e06-4dca-bee2-fcb4cf3d6157" name="Changes" comment="сильно улучшил масштабирование для пк">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pathfinder/templates/pathfinder/floor_map.html" beforeDir="false" afterPath="$PROJECT_DIR$/pathfinder/templates/pathfinder/floor_map.html" afterDir="false" />
     </list>
@@ -126,7 +126,7 @@
       <updated>1732389731425</updated>
       <workItem from="1732389732875" duration="4462000" />
       <workItem from="1732394276889" duration="3122000" />
-      <workItem from="1732397414365" duration="3165000" />
+      <workItem from="1732397414365" duration="3651000" />
     </task>
     <task id="LOCAL-00001" summary="initial (тут готово отображение маршрута по данным из views.py)">
       <option name="closed" value="true" />
@@ -144,7 +144,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732399169186</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="сильно улучшил масштабирование для пк">
+      <option name="closed" value="true" />
+      <created>1732400604385</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1732400604385</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -153,6 +161,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial (тут готово отображение маршрута по данным из views.py)" />
     <MESSAGE value="добавил стили и вынес карту в отдельную область" />
-    <option name="LAST_COMMIT_MESSAGE" value="добавил стили и вынес карту в отдельную область" />
+    <MESSAGE value="сильно улучшил масштабирование для пк" />
+    <option name="LAST_COMMIT_MESSAGE" value="сильно улучшил масштабирование для пк" />
   </component>
 </project>
