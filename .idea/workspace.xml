@@ -4,8 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="189e4f96-7e06-4dca-bee2-fcb4cf3d6157" name="Changes" comment="сильно улучшил масштабирование для пк">
+    <list default="true" id="189e4f96-7e06-4dca-bee2-fcb4cf3d6157" name="Changes" comment="сделал масштабирование на телефоне">
+      <change afterPath="$PROJECT_DIR$/nodes.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pathfinder/static/pathfinder/float_1.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pathfinder/static/pathfinder/flour_1.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DjangoCampusMap/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjangoCampusMap/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pathfinder/data/edges.csv" beforeDir="false" afterPath="$PROJECT_DIR$/edges.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pathfinder/data/nodes.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pathfinder/scripts.py" beforeDir="false" afterPath="$PROJECT_DIR$/pathfinder/scripts.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pathfinder/templates/pathfinder/floor_map.html" beforeDir="false" afterPath="$PROJECT_DIR$/pathfinder/templates/pathfinder/floor_map.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,18 +35,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Allfeeto"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Allfeeto&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Allfeeto/django-campus-map",
-    "accountId": "83f72de4-ae22-4ea2-89b0-e6d7cb9248a1"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Allfeeto/django-campus-map&quot;,
+    &quot;accountId&quot;: &quot;83f72de4-ae22-4ea2-89b0-e6d7cb9248a1&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -48,34 +56,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Django Server.DjangoCampusMap.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
-    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/10509/PycharmProjects/DjangoCampusMap/pathfinder/templates/pathfinder&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Django Server.DjangoCampusMap.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "com.codeium.enabled": "true",
+    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/10509/PycharmProjects/DjangoCampusMap",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "vcs.Git",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap\pathfinder\templates\pathfinder" />
+      <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap" />
       <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap\pathfinder\static\pathfinder" />
       <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap\pathfinder\data" />
+      <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap\pathfinder\templates\pathfinder" />
       <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap\pathfinder\ management" />
-      <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap\pathfinder\ management\commands" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap\pathfinder\static\pathfinder" />
       <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap\pathfinder\data" />
       <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap" />
       <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap\pathfinder\ management\commands" />
@@ -126,7 +135,12 @@
       <updated>1732389731425</updated>
       <workItem from="1732389732875" duration="4462000" />
       <workItem from="1732394276889" duration="3122000" />
-      <workItem from="1732397414365" duration="3651000" />
+      <workItem from="1732397414365" duration="3824000" />
+      <workItem from="1732401257013" duration="1417000" />
+      <workItem from="1732485856441" duration="3954000" />
+      <workItem from="1732514224367" duration="3512000" />
+      <workItem from="1732619498968" duration="5103000" />
+      <workItem from="1732657563282" duration="1356000" />
     </task>
     <task id="LOCAL-00001" summary="initial (тут готово отображение маршрута по данным из views.py)">
       <option name="closed" value="true" />
@@ -152,7 +166,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732400604385</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="сделал масштабирование на телефоне">
+      <option name="closed" value="true" />
+      <created>1732401127718</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1732401127718</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,6 +184,7 @@
     <MESSAGE value="initial (тут готово отображение маршрута по данным из views.py)" />
     <MESSAGE value="добавил стили и вынес карту в отдельную область" />
     <MESSAGE value="сильно улучшил масштабирование для пк" />
-    <option name="LAST_COMMIT_MESSAGE" value="сильно улучшил масштабирование для пк" />
+    <MESSAGE value="сделал масштабирование на телефоне" />
+    <option name="LAST_COMMIT_MESSAGE" value="сделал масштабирование на телефоне" />
   </component>
 </project>

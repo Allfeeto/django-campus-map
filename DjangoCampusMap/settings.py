@@ -25,8 +25,15 @@ SECRET_KEY = 'django-insecure-0&8ysnx4bjr2uu08@8_0(kl6qikm!9&+5n^jn0vz2g7)b84c-a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '*'
+]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.ngrok-free.app',
+    'https://*.ngrok.io',
+    'https://*.trycloudflare.com',
+]
 
 # Application definition
 
@@ -38,9 +45,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pathfinder',
+    'corsheaders', #Это для айфонов
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Добавьте здесь
+    'django.middleware.common.CommonMiddleware',  # Для совместимости
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Подключаем WhiteNoise
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -111,6 +123,11 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+
+CORS_ALLOW_ALL_ORIGINS = True
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 
 # Static files (CSS, JavaScript, Images)

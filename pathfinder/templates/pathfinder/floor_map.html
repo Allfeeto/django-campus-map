@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Floor {{ floor }}</title>
 
     <!-- Подключение Bootstrap -->
@@ -12,11 +12,12 @@
             position: relative;
             width: 100%;
             max-width: 900px; /* Ограничиваем видимую область карты */
-            height: 600px;     /* Ограничиваем высоту карты */
+            height: 500px;     /* Ограничиваем высоту карты */
             overflow: hidden;  /* Отключаем стандартную прокрутку */
             border: 1px solid #ddd;
             margin: 0 auto;    /* Центрируем карту */
             user-select: none; /* Отключение выделения текста */
+            touch-action: pan-x pan-y; /* Разрешаем прокрутку, но обработаем жесты вручную */
         }
 
         .map-wrapper {
@@ -40,7 +41,7 @@
     {% load form_filters %}
 
     <div class="container">
-        <h1 class="text-center text-primary mb-4">Floor {{ floor }}</h1>
+        <h1 class="text-center text-primary mb-4">Этаж {{ floor }}</h1>
 
         <!-- Форма для выбора начальной и конечной точки -->
         <form method="post" class="row g-3">
@@ -61,13 +62,11 @@
         <!-- Карта с масштабированием -->
         <div class="map-container mt-4" id="map-container">
             <div class="map-wrapper" id="map-wrapper">
-                <img src="{% static 'pathfinder/1floor.svg' %}"
-                     alt="Floor {{ floor }}"
-                     width="3000"
-                     height="2000">
+                <object type="image/svg+xml" data="{% static 'pathfinder/flour_1.svg' %}" width="4500" height="2500" alt="Floor {{ floor }}"></object>
+
 
                 <!-- Слой маршрута -->
-                <svg class="map-overlay" width="3000" height="2000" xmlns="http://www.w3.org/2000/svg">
+                <svg class="map-overlay" width="4500" height="2500" xmlns="http://www.w3.org/2000/svg">
                     <!-- Рёбра маршрута -->
                     {% for edge in path_edges %}
                     <line x1="{{ edge.from_node.x }}" y1="{{ edge.from_node.y }}"
@@ -93,14 +92,14 @@
     <script>
     const container = document.getElementById('map-container');
     const wrapper = document.getElementById('map-wrapper');
-    let scale = 0.3; // Установить минимальный масштаб при загрузке
+    let scale = 0.2; // Установить минимальный масштаб при загрузке
     let translateX = 0, translateY = 0; // Текущая позиция
     let isDragging = false;
     let startX, startY, touchStartX, touchStartY;
 
     // Получить размеры карты и контейнера
-    const mapWidth = 3000; // Ширина карты (в пикселях)
-    const mapHeight = 2000; // Высота карты (в пикселях)
+    const mapWidth = 4500; // Ширина карты (в пикселях)
+    const mapHeight = 2500; // Высота карты (в пикселях)
     const containerWidth = container.offsetWidth;
     const containerHeight = container.offsetHeight;
 
@@ -120,7 +119,7 @@
         if (e.deltaY < 0) {
             scale += scaleAmount; // Увеличение масштаба
         } else {
-            scale = Math.max(0.3, scale - scaleAmount); // Минимальный масштаб
+            scale = Math.max(0.2, scale - scaleAmount); // Минимальный масштаб
         }
 
         const rect = container.getBoundingClientRect();
@@ -186,6 +185,74 @@
             touchStartY = e.touches[0].clientY - translateY;
         }
     });
+    
+    
+    
+    
+    
+    
+    let initialDistance = null;
+    let initialCenter = null;
+    
+    // Рассчитать центр между двумя пальцами
+    function getTouchCenter(touches) {
+        const x = (touches[0].clientX + touches[1].clientX) / 2;
+        const y = (touches[0].clientY + touches[1].clientY) / 2;
+        return { x, y };
+    }
+    
+    // Начало масштабирования
+    container.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            initialDistance = Math.sqrt(dx * dx + dy * dy);
+            initialCenter = getTouchCenter(e.touches); // Сохраняем начальный центр
+        }
+    });
+    
+    // Масштабирование
+    container.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2 && initialDistance) {
+            e.preventDefault();
+    
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            const currentDistance = Math.sqrt(dx * dx + dy * dy);
+    
+            // Новый масштаб
+            const scaleChange = currentDistance / initialDistance;
+            const newScale = Math.max(0.2, scale * scaleChange); // Минимальный масштаб
+    
+            // Центр между пальцами
+            const currentCenter = getTouchCenter(e.touches);
+    
+            // Смещение карты
+            const rect = container.getBoundingClientRect();
+            const offsetX = (currentCenter.x - rect.left - translateX) / scale;
+            const offsetY = (currentCenter.y - rect.top - translateY) / scale;
+    
+            // Пересчёт положения для сохранения центра
+            translateX = currentCenter.x - rect.left - offsetX * newScale;
+            translateY = currentCenter.y - rect.top - offsetY * newScale;
+    
+            scale = newScale;
+            initialDistance = currentDistance; // Обновляем расстояние
+            updateTransform();
+        }
+    });
+    
+    // Завершение масштабирования
+    container.addEventListener('touchend', () => {
+        if (initialDistance) {
+            initialDistance = null;
+            initialCenter = null;
+        }
+    });
+
+    
+    
+    
 
     container.addEventListener('touchmove', (e) => {
         if (!isDragging || e.touches.length !== 1) return;
@@ -202,6 +269,33 @@
     function updateTransform() {
         wrapper.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
     }
+    
+
+
+    // Функция для центрирования изображения в контейнере
+    function centerMap() {
+        // Получаем размеры контейнера
+        const containerWidth = container.offsetWidth;
+        const containerHeight = container.offsetHeight;
+    
+        // Рассчитываем смещение для центрирования карты (с учётом масштаба)
+        translateX = (containerWidth - mapWidth * scale) / 2;
+        translateY = (containerHeight - mapHeight * scale) / 2;
+    
+        // Применяем трансформацию (сдвиг и масштаб)
+        updateTransform();
+    }
+    
+    // Обновление трансформации
+    function updateTransform() {
+        wrapper.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    }
+    
+    // Инициализация при загрузке страницы
+    window.addEventListener('load', centerMap);
+    window.addEventListener('resize', centerMap); // Центрируем карту при изменении размера окна
+
+    
 
     // Инициализация карты
     initializeTransform();

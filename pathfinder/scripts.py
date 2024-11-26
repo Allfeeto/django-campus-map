@@ -14,7 +14,7 @@ def import_data():
                 name=row['id'],
                 x=int(row['x']),
                 y=int(row['y']),
-                floor=int(row.get('floor', 1))
+                floor=int(row['floor'])
             )
     print("Nodes imported successfully.")
 
@@ -44,3 +44,6 @@ def import_data():
                 weight=weight
             )
     print("Edges imported successfully.")
+
+#from pathfinder.scripts import import_data
+#import_data()
