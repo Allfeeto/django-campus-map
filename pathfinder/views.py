@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .models import Node, Edge
 import heapq  # Для очереди с приоритетами
 from .forms import RouteForm
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 
 def find_shortest_path(start_name, end_name, start_floor=1, end_floor=1):
@@ -60,7 +62,7 @@ def floor_map(request, floor=1):
     path_edges = []
     terminal_nodes = []
 
-    if request.method == 'POST':
+    if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         form = RouteForm(request.POST)
         if form.is_valid():
             start_node = form.cleaned_data['start'].name
@@ -81,9 +83,17 @@ def floor_map(request, floor=1):
                 Node.objects.get(name=end_node)
             ]
 
+            # Генерируем HTML для слоя маршрута
+            path_overlay = render_to_string('pathfinder/_path_overlay.html', {
+                'path_edges': path_edges,
+                'nodes': terminal_nodes,
+            })
+
+            return JsonResponse({'path_overlay': path_overlay})
+
     return render(request, 'pathfinder/floor_map.html', {
-        'form': form,  # Форма для выбора начальной и конечной точки
-        'nodes': terminal_nodes,  # Только начальный и конечный узлы
+        'form': form,
+        'nodes': terminal_nodes,
         'edges': edges,
         'path_nodes': path_nodes,
         'path_edges': path_edges,

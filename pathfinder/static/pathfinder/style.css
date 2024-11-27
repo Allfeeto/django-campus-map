@@ -8,6 +8,7 @@
     margin: 0 auto;    /* Центрируем карту */
     user-select: none; /* Отключение выделения текста */
     touch-action: pan-x pan-y; /* Разрешаем прокрутку, но обработаем жесты вручную */
+    margin-bottom: 20px;
 }
 
 .map-wrapper {

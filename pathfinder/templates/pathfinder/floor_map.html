@@ -10,6 +10,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Подключение собственного файла стилей -->
     <link rel="stylesheet" href="{% static 'pathfinder/style.css' %}">
+    <!-- Подключение jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body class="bg-light">
 
@@ -19,12 +21,10 @@
         <!-- Карта с масштабированием -->
         <div class="map-container mt-4" id="map-container">
             <div class="map-wrapper" id="map-wrapper">
-                <!-- Заменим схему этажа в зависимости от выбранного этажа -->
                 <object type="image/svg+xml" data="{% static 'pathfinder/floor_' %}{{ floor }}.svg" width="4500" height="2500" alt="Floor {{ floor }}"></object>
 
-
                 <!-- Слой маршрута -->
-                <svg class="map-overlay" width="4500" height="2500" xmlns="http://www.w3.org/2000/svg">
+                <svg class="map-overlay" width="4500" height="2500" xmlns="http://www.w3.org/2000/svg" id="map-overlay">
                     <!-- Рёбра маршрута -->
                     {% for edge in path_edges %}
                     <line x1="{{ edge.from_node.x }}" y1="{{ edge.from_node.y }}"
@@ -42,9 +42,8 @@
             </div>
         </div>
     
-    
         <!-- Форма для выбора начальной и конечной точки -->
-        <form method="post" class="row g-3">
+        <form method="post" class="row g-3" id="route-form">
             {% csrf_token %}
             <div class="col-md-5">
                 <label for="start" class="form-label">Начальная точка</label>
@@ -58,6 +57,7 @@
                 <button type="submit" class="btn btn-primary w-100">Построить маршрут</button>
             </div>
         </form>
+    
         <!-- Кнопки для переключения этажей -->
         <div class="text-center mt-4">
             <form method="get" action="{% url 'floor_map' floor=1 %}" class="d-inline-block">
@@ -68,11 +68,33 @@
             </form>
         </div>
     </div>
-    
-
 
     <!-- Подключение собственного JavaScript -->
     <script src="{% static 'pathfinder/script.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            // Обработчик отправки формы с использованием AJAX
+            $('#route-form').submit(function(event) {
+                event.preventDefault(); // Предотвратить стандартное поведение формы
+        
+                var formData = $(this).serialize(); // Собрать данные формы
+        
+                $.ajax({
+                    url: "{% url 'floor_map' floor=floor %}", // URL для отправки данных
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        // Обновить карту и маршрут
+                        $('#map-overlay').html(response.path_overlay); // Обновляем слой маршрута
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Ошибка AJAX:", status, error);
+                    }
+                });
+            });
+        });
+
+    </script>
 
 </body>
 </html>

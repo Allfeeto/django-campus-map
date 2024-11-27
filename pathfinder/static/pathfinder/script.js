@@ -203,6 +203,5 @@
     window.addEventListener('resize', centerMap); // Центрируем карту при изменении размера окна
 
 
-
     // Инициализация карты
     initializeTransform();

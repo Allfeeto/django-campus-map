@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="189e4f96-7e06-4dca-bee2-fcb4cf3d6157" name="Changes" comment="ком перед добавлением второго этажа">
-      <change afterPath="$PROJECT_DIR$/pathfinder/static/pathfinder/floor_2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/static/pathfinder/script.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/static/pathfinder/style.css" afterDir="false" />
+    <list default="true" id="189e4f96-7e06-4dca-bee2-fcb4cf3d6157" name="Changes" comment="отчасти работают этажи">
+      <change afterPath="$PROJECT_DIR$/pathfinder/templates/pathfinder/_path_overlay.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DjangoCampusMap/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjangoCampusMap/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/edges.csv" beforeDir="false" afterPath="$PROJECT_DIR$/edges.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pathfinder/static/pathfinder/flour_1.svg" beforeDir="false" afterPath="$PROJECT_DIR$/pathfinder/static/pathfinder/floor_1.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pathfinder/static/pathfinder/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/pathfinder/static/pathfinder/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pathfinder/static/pathfinder/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/pathfinder/static/pathfinder/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pathfinder/templates/pathfinder/floor_map.html" beforeDir="false" afterPath="$PROJECT_DIR$/pathfinder/templates/pathfinder/floor_map.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pathfinder/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/pathfinder/views.py" afterDir="false" />
     </list>
@@ -58,32 +55,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Django Server.DjangoCampusMap.executor": "Run",
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "com.codeium.enabled": "true",
-    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/10509/PycharmProjects/DjangoCampusMap",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "vcs.Git",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Django Server.DjangoCampusMap.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
+    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/10509/PycharmProjects/DjangoCampusMap/pathfinder/templates/pathfinder&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap\pathfinder\templates\pathfinder" />
       <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap" />
       <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap\pathfinder\static\pathfinder" />
       <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap\pathfinder\data" />
-      <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap\pathfinder\templates\pathfinder" />
       <recent name="C:\Users\10509\PycharmProjects\DjangoCampusMap\pathfinder\ management" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -143,7 +140,10 @@
       <workItem from="1732485856441" duration="3954000" />
       <workItem from="1732514224367" duration="3512000" />
       <workItem from="1732619498968" duration="5103000" />
-      <workItem from="1732657563282" duration="8929000" />
+      <workItem from="1732657563282" duration="9683000" />
+      <workItem from="1732697852937" duration="5128000" />
+      <workItem from="1732704705288" duration="396000" />
+      <workItem from="1732716367043" duration="466000" />
     </task>
     <task id="LOCAL-00001" summary="initial (тут готово отображение маршрута по данным из views.py)">
       <option name="closed" value="true" />
@@ -185,7 +185,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732659014536</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="отчасти работают этажи">
+      <option name="closed" value="true" />
+      <created>1732666544892</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1732666544892</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -197,6 +205,7 @@
     <MESSAGE value="сильно улучшил масштабирование для пк" />
     <MESSAGE value="сделал масштабирование на телефоне" />
     <MESSAGE value="ком перед добавлением второго этажа" />
-    <option name="LAST_COMMIT_MESSAGE" value="ком перед добавлением второго этажа" />
+    <MESSAGE value="отчасти работают этажи" />
+    <option name="LAST_COMMIT_MESSAGE" value="отчасти работают этажи" />
   </component>
 </project>

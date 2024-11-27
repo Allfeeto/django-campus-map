@@ -1,0 +1,15 @@
+<svg class="map-overlay" width="4500" height="2500" xmlns="http://www.w3.org/2000/svg" id="map-overlay">
+    <!-- Рёбра маршрута -->
+    {% for edge in path_edges %}
+    <line x1="{{ edge.from_node.x }}" y1="{{ edge.from_node.y }}"
+          x2="{{ edge.to_node.x }}" y2="{{ edge.to_node.y }}"
+          stroke="darkblue" stroke-width="4" />
+    {% endfor %}
+
+    <!-- Отображаем только начальный и конечный узлы -->
+    {% for node in nodes %}
+    <circle cx="{{ node.x }}" cy="{{ node.y }}" r="10" fill="darkblue" stroke="black" stroke-width="2">
+        <title>{{ node.name }}</title>
+    </circle>
+    {% endfor %}
+</svg>
