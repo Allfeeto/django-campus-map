@@ -4,17 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="189e4f96-7e06-4dca-bee2-fcb4cf3d6157" name="Changes" comment="сделал масштабирование на телефоне">
-      <change afterPath="$PROJECT_DIR$/nodes.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/static/pathfinder/float_1.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pathfinder/static/pathfinder/flour_1.svg" afterDir="false" />
+    <list default="true" id="189e4f96-7e06-4dca-bee2-fcb4cf3d6157" name="Changes" comment="ком перед добавлением второго этажа">
+      <change afterPath="$PROJECT_DIR$/pathfinder/static/pathfinder/floor_2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pathfinder/static/pathfinder/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pathfinder/static/pathfinder/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DjangoCampusMap/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjangoCampusMap/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pathfinder/data/edges.csv" beforeDir="false" afterPath="$PROJECT_DIR$/edges.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pathfinder/data/nodes.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pathfinder/scripts.py" beforeDir="false" afterPath="$PROJECT_DIR$/pathfinder/scripts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edges.csv" beforeDir="false" afterPath="$PROJECT_DIR$/edges.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pathfinder/static/pathfinder/flour_1.svg" beforeDir="false" afterPath="$PROJECT_DIR$/pathfinder/static/pathfinder/floor_1.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pathfinder/templates/pathfinder/floor_map.html" beforeDir="false" afterPath="$PROJECT_DIR$/pathfinder/templates/pathfinder/floor_map.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pathfinder/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/pathfinder/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +29,8 @@
       <list>
         <option value="HTML File" />
         <option value="Python Script" />
+        <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -66,6 +68,7 @@
     "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/10509/PycharmProjects/DjangoCampusMap",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -140,7 +143,7 @@
       <workItem from="1732485856441" duration="3954000" />
       <workItem from="1732514224367" duration="3512000" />
       <workItem from="1732619498968" duration="5103000" />
-      <workItem from="1732657563282" duration="1356000" />
+      <workItem from="1732657563282" duration="8929000" />
     </task>
     <task id="LOCAL-00001" summary="initial (тут готово отображение маршрута по данным из views.py)">
       <option name="closed" value="true" />
@@ -174,7 +177,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732401127718</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="ком перед добавлением второго этажа">
+      <option name="closed" value="true" />
+      <created>1732659014536</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1732659014536</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -185,6 +196,7 @@
     <MESSAGE value="добавил стили и вынес карту в отдельную область" />
     <MESSAGE value="сильно улучшил масштабирование для пк" />
     <MESSAGE value="сделал масштабирование на телефоне" />
-    <option name="LAST_COMMIT_MESSAGE" value="сделал масштабирование на телефоне" />
+    <MESSAGE value="ком перед добавлением второго этажа" />
+    <option name="LAST_COMMIT_MESSAGE" value="ком перед добавлением второго этажа" />
   </component>
 </project>

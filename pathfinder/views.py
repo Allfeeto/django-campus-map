@@ -4,18 +4,31 @@ import heapq  # Для очереди с приоритетами
 from .forms import RouteForm
 
 
-def find_shortest_path(start_name, end_name):
-    # Построим граф в виде словаря
+def find_shortest_path(start_name, end_name, start_floor=1, end_floor=1):
+    # Построим граф в виде словаря с учетом этажей
     graph = {}
-    for edge in Edge.objects.all():
-        if edge.from_node.name not in graph:
-            graph[edge.from_node.name] = []
-        if edge.to_node.name not in graph:
-            graph[edge.to_node.name] = []
-        graph[edge.from_node.name].append((edge.to_node.name, edge.weight))
-        graph[edge.to_node.name].append((edge.from_node.name, edge.weight))
 
-    # Алгоритм Дейкстры
+    for edge in Edge.objects.all():
+        # Если ребро соединяет два узла на одном этаже, добавляем его
+        if edge.from_node.floor == edge.to_node.floor:
+            if edge.from_node.name not in graph:
+                graph[edge.from_node.name] = []
+            if edge.to_node.name not in graph:
+                graph[edge.to_node.name] = []
+            graph[edge.from_node.name].append((edge.to_node.name, edge.weight))
+            graph[edge.to_node.name].append((edge.from_node.name, edge.weight))
+
+        # Если ребро соединяет узлы с разных этажей (лестница), добавляем тоже
+        elif (edge.from_node.floor == start_floor and edge.to_node.floor == end_floor) or \
+                (edge.from_node.floor == end_floor and edge.to_node.floor == start_floor):
+            if edge.from_node.name not in graph:
+                graph[edge.from_node.name] = []
+            if edge.to_node.name not in graph:
+                graph[edge.to_node.name] = []
+            graph[edge.from_node.name].append((edge.to_node.name, edge.weight))
+            graph[edge.to_node.name].append((edge.from_node.name, edge.weight))
+
+    # Алгоритм Дейкстры (с учетом этажей)
     priority_queue = [(0, start_name, [])]  # (текущая стоимость, текущий узел, маршрут)
     visited = set()
 
@@ -53,8 +66,12 @@ def floor_map(request, floor=1):
             start_node = form.cleaned_data['start'].name
             end_node = form.cleaned_data['end'].name
 
+            # Определяем, на каких этажах находятся стартовая и конечная точки
+            start_floor = form.cleaned_data['start'].floor
+            end_floor = form.cleaned_data['end'].floor
+
             # Найти маршрут
-            path = find_shortest_path(start_node, end_node)
+            path = find_shortest_path(start_node, end_node, start_floor, end_floor)
             path_nodes = Node.objects.filter(name__in=path)
             path_edges = edges.filter(from_node__name__in=path, to_node__name__in=path)
 
