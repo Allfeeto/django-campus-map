@@ -15,9 +15,119 @@
     const containerHeight = container.offsetHeight;
 
     // Применение начального масштаба
-    function initializeTransform() {
+// Инициализация трансформации карты
+function initializeTransform() {
+    const container = document.getElementById('map-container');
+    const wrapper = document.getElementById('map-wrapper');
+    let scale = 0.2; // Начальный масштаб
+    let translateX = 0, translateY = 0; // Позиция
+    let isDragging = false;
+    let startX, startY, touchStartX, touchStartY;
+
+    // Применение начального масштаба
+    wrapper.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+    // Масштабирование с учётом центра курсора
+    container.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const scaleAmount = 0.1;
+        const oldScale = scale;
+
+        if (e.deltaY < 0) {
+            scale += scaleAmount; // Увеличение масштаба
+        } else {
+            scale = Math.max(0.2, scale - scaleAmount); // Минимальный масштаб
+        }
+
+        const rect = container.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        const offsetX = (mouseX - translateX) / oldScale;
+        const offsetY = (mouseY - translateY) / oldScale;
+
+        translateX = mouseX - offsetX * scale;
+        translateY = mouseY - offsetY * scale;
+
         wrapper.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    });
+
+    // Перетаскивание карты
+    container.addEventListener('mousedown', (e) => {
+        e.preventDefault(); // Отключаем выделение текста
+        isDragging = true;
+        startX = e.clientX - translateX;
+        startY = e.clientY - translateY;
+    });
+
+    container.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        translateX = e.clientX - startX;
+        translateY = e.clientY - startY;
+        wrapper.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    });
+
+    container.addEventListener('mouseup', () => isDragging = false);
+    container.addEventListener('mouseleave', () => isDragging = false);
+
+    // Обработка касаний для мобильных устройств
+    container.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+            isDragging = true;
+            touchStartX = e.touches[0].clientX - translateX;
+            touchStartY = e.touches[0].clientY - translateY;
+        }
+    });
+
+    container.addEventListener('touchmove', (e) => {
+        if (!isDragging || e.touches.length !== 1) return;
+        translateX = e.touches[0].clientX - touchStartX;
+        translateY = e.touches[0].clientY - touchStartY;
+        wrapper.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    });
+
+    container.addEventListener('touchend', () => isDragging = false);
+    container.addEventListener('touchcancel', () => isDragging = false);
+}
+
+// Применяем инициализацию карты после загрузки нового SVG
+$(document).on('click', '.btn-floor', function(event) {
+    event.preventDefault();
+    var floor = $(this).data('floor');
+    var start_node = $('#id_start').val();
+    var end_node = $('#id_end').val();
+
+    var data = { floor: floor };
+    if (start_node && end_node) {
+        data.start = start_node;
+        data.end = end_node;
     }
+
+    $.ajax({
+        url: "/map/",
+        type: 'GET',
+        data: data,
+        success: function(response) {
+            // Обновляем карту
+            $('#map-wrapper').html(response.map_html);
+
+            // Инициализируем трансформацию для нового SVG
+            initializeTransform(); // Важно вызывать снова
+
+            // Обновляем форму для построения маршрута
+            $('#route-form').html(response.route_form_html);
+
+            // Если маршрут был построен, добавляем его снова
+            if (response.path_overlay) {
+                $('#map-overlay').html(response.path_overlay);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Ошибка при переключении этажа:", status, error);
+        }
+    });
+});
+
 
     // Масштабирование с учётом центра курсора
     container.addEventListener('wheel', (e) => {
@@ -201,6 +311,9 @@
     // Инициализация при загрузке страницы
     window.addEventListener('load', centerMap);
     window.addEventListener('resize', centerMap); // Центрируем карту при изменении размера окна
+
+
+
 
 
     // Инициализация карты

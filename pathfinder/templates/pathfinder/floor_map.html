@@ -19,29 +19,16 @@
         <h1 class="text-center text-primary mb-4">Этаж {{ floor }}</h1>
 
         <!-- Карта с масштабированием -->
-        <div class="map-container mt-4" id="map-container">
-            <div class="map-wrapper" id="map-wrapper">
-                <object type="image/svg+xml" data="{% static 'pathfinder/floor_' %}{{ floor }}.svg" width="4500" height="2500" alt="Floor {{ floor }}"></object>
-
-                <!-- Слой маршрута -->
-                <svg class="map-overlay" width="4500" height="2500" xmlns="http://www.w3.org/2000/svg" id="map-overlay">
-                    <!-- Рёбра маршрута -->
-                    {% for edge in path_edges %}
-                    <line x1="{{ edge.from_node.x }}" y1="{{ edge.from_node.y }}"
-                          x2="{{ edge.to_node.x }}" y2="{{ edge.to_node.y }}"
-                          stroke="darkblue" stroke-width="4" />
-                    {% endfor %}
-
-                    <!-- Отображаем только начальный и конечный узлы -->
-                    {% for node in nodes %}
-                    <circle cx="{{ node.x }}" cy="{{ node.y }}" r="10" fill="darkblue" stroke="black" stroke-width="2">
-                        <title>{{ node.name }}</title>
-                    </circle>
-                    {% endfor %}
-                </svg>
-            </div>
+<div class="map-container mt-4" id="map-container">
+    <div class="map-wrapper" id="map-wrapper">
+        <!-- Тут должен рендериться объект SVG -->
+        <object type="image/svg+xml" data="{% static 'pathfinder/floor_' %}{{ floor }}.svg" width="4500" height="2500" alt="Floor {{ floor }}"></object>
+        <div id="map-overlay">
+            <!-- Слой маршрута будет вставлен сюда -->
         </div>
-    
+    </div>
+</div>
+
         <!-- Форма для выбора начальной и конечной точки -->
         <form method="post" class="row g-3" id="route-form">
             {% csrf_token %}
@@ -56,45 +43,106 @@
             <div class="col-md-2 d-flex align-items-end">
                 <button type="submit" class="btn btn-primary w-100">Построить маршрут</button>
             </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="button" id="reset-route" class="btn btn-danger">Отменить маршрут</button>
+            </div>
         </form>
-    
+
+
+
         <!-- Кнопки для переключения этажей -->
         <div class="text-center mt-4">
-            <form method="get" action="{% url 'floor_map' floor=1 %}" class="d-inline-block">
-                <button type="submit" class="btn btn-secondary">1-й этаж</button>
-            </form>
-            <form method="get" action="{% url 'floor_map' floor=2 %}" class="d-inline-block">
-                <button type="submit" class="btn btn-secondary">2-й этаж</button>
-            </form>
+            <button type="button" class="btn btn-secondary btn-floor" data-floor="1">1-й этаж</button>
+            <button type="button" class="btn btn-secondary btn-floor" data-floor="2">2-й этаж</button>
         </div>
+
     </div>
 
     <!-- Подключение собственного JavaScript -->
     <script src="{% static 'pathfinder/script.js' %}"></script>
     <script>
-        $(document).ready(function() {
-            // Обработчик отправки формы с использованием AJAX
-            $('#route-form').submit(function(event) {
-                event.preventDefault(); // Предотвратить стандартное поведение формы
-        
-                var formData = $(this).serialize(); // Собрать данные формы
-        
-                $.ajax({
-                    url: "{% url 'floor_map' floor=floor %}", // URL для отправки данных
-                    type: 'POST',
-                    data: formData,
-                    success: function(response) {
-                        // Обновить карту и маршрут
-                        $('#map-overlay').html(response.path_overlay); // Обновляем слой маршрута
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Ошибка AJAX:", status, error);
-                    }
-                });
-            });
-        });
+$(document).ready(function() {
+    console.log($('.btn-floor').length);
 
-    </script>
+    // Переключение этажей
+$(document).on('click', '.btn-floor', function(event) {
+    console.log('Кнопка выбора этажа кликнута!');
+    event.preventDefault();
+    var floor = $(this).data('floor');
+
+    var start_node = $('#id_start').val();
+    var end_node = $('#id_end').val();
+
+    var data = {
+        floor: floor
+    };
+
+    if (start_node && end_node) {
+        data.start = start_node;
+        data.end = end_node;
+    }
+    $('#map-wrapper object').on('load', function() {
+    initializeTransform(); // Инициализируем трансформацию после загрузки SVG
+        
+    });
+
+    // Отправляем запрос на сервер с параметрами
+    $.ajax({
+        url: "/map/",
+        type: 'GET',
+        data: data,
+        success: function(response) {
+            // Обновляем карту
+            $('#map-wrapper').html(response.map_html);
+            // Инициализация карты
+            initializeTransform();
+
+
+            // Обновляем форму для построения маршрута
+            $('#route-form').html(response.route_form_html);
+
+            // Если маршрут был построен, добавляем его снова
+            if (response.path_overlay) {
+                $('#map-overlay').html(response.path_overlay);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Ошибка при переключении этажа:", status, error);
+        }
+    });
+});
+
+    // Обработка отправки формы для построения маршрута
+    $('#route-form').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();  // Сериализуем форму
+
+        $.ajax({
+            url: "/map/",
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                $('#map-overlay').html(response.path_overlay);
+            },
+            error: function(xhr, status, error) {
+                console.error("Ошибка при построении маршрута:", status, error);
+            }
+        });
+    });
+
+    // Сброс маршрута
+    $('#reset-route').click(function() {
+        $('#map-overlay').html('');
+        $('#route-form')[0].reset();  // Сброс формы
+    });
+});
+</script>
+
+
+
+
+
+
 
 </body>
 </html>
